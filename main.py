@@ -37,6 +37,26 @@ def readFile(fileName):
 
 
 
-readFile("Salaries\FD_SALAAN_2017.csv")
+readFile("FD_SALAAN_2016.csv")
 
-workers[0].affiche()
+
+
+def salaryManWoman(workers):
+    repM=[]
+    repF=[]
+    
+
+    for i in range(0,24):
+        repM.append(0)
+        repF.append(0)
+
+    for i in range (0,len(workers)):
+        if(workers[i].sex=="1"):
+            repM[int(workers[i].salary)]+=1
+        else:
+            repF[int(workers[i].salary)]+=1
+
+    print(repM)
+    print(repF)
+
+salaryManWoman(workers)
