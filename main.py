@@ -35,25 +35,7 @@ def readFile(fileName):
         s = f.readline().split(";")
         workers.append(Person(i+2, s[pos["age"]], s[pos["sex"]], s[pos["dept"]], s[pos["salary"]], s[pos["nomenc"]]))
 
-def salaire():
-    sumFemme = 0
-    sumHomme = 0
-    sumSalaireH = 0
-    sumSalaireF = 0
 
-    for i in range (len(workers)):
-        if (workers2016[i].sex == "1"):
-            sumHomme += 1
-            sumSalaireH += workers[i].salary
-        else:
-            sumFemme += 1
-            sumSalaireF += workers[i].salary
-
-    avgFemme = sumSalaireF / sumFemme
-    avgHomme = sumSalaireH / sumHomme
-
-    print("moyenne homme : " + str(avgHomme))
-    print("moyenne femme : " + str(avgFemme))
 
 readFile("Salaries\FD_SALAAN_2017.csv")
 
