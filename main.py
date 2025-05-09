@@ -400,6 +400,44 @@ def medSalaireSelonDept(workers):
     return res
 
 
+
+    def medSalaryNomenclature(repA,varmodfilename): 
+    ECC=[] 
+    
+
+    for i in range(0,len(repA)):
+        ECC.append([])
+        sum=0
+        for j in range (0,len(repA[i])):
+            sum+=repA[i][j]
+            ECC[i].append(sum)
+
+    for i in range (len(repA)): #affichage
+        print(ECC[i])
+
+    nummed=[] 
+    
+    for i in range(0,len(ECC)):
+        nummed.append((ECC[i][len(ECC[i])-1]/2))
+
+    print(nummed) # affichage
+
+    med=[]
+    salaries=getSalariesMinMax(varmodfilename) 
+
+    
+    for i in range (0,len(nummed)): #calcul des médianes
+        
+            
+        for j in range (0,len(ECC[i])):
+            if(nummed[i]-ECC[i][j]<=0): 
+                    
+                    
+                med.append(    salaries[j][0]+    (    (nummed[i]-ECC[i][j-1])    *    (salaries[j][2]-salaries[j][0])    )    /    (ECC[i][j]-ECC[i][j-1])    ) 
+                break
+    print(med)
+
+
     def SalarySexDifference(workers,varmodfilename):
     tmp=salaryManWoman(workers)
     repM=tmp[0]
