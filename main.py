@@ -59,49 +59,108 @@ def salaryManWoman(workers):
     print(repM)
     print(repF)
 
-# la fonction à utiliser est proportionFemmeHomme, celle-là donne directement le nombre d'hommes et de femmes dans chaque departement
-def salaireSelonDept(workers):
-    sumH = [0, 0, 0, 0, 0, 0, 0]
-    sumF = [0, 0, 0, 0, 0, 0, 0]
+# calcul des effectifs d'homme et de femme dans chaque secteur d'industrie selon la nomenclature agrégée A6 
+def effectifSelonDept(workers):
+    cpt = [[0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0]]
 
+    # une hashmap serait bien
     for i in range (len(workers)):
         dept = workers[i].nomenc
 
-        if (workers[i].sex == "1"):
-            if (dept == ""): sumH[0] += 1
-            if (dept == "AZ"): sumH[1] += 1
-            if (dept == "BE"): sumH[2] += 1
-            if (dept == "FZ"): sumH[3] += 1
-            if (dept == "GI"): sumH[4] += 1
-            if (dept == "JU"): sumH[5] += 1
-            if (dept == "OQ"): sumH[6] += 1
+        if (dept == ""): cpt[int(workers[i].sex) - 1][0] += 1
+        if (dept == "AZ"): cpt[int(workers[i].sex) - 1][1] += 1
+        if (dept == "BE"): cpt[int(workers[i].sex) - 1][2] += 1
+        if (dept == "FZ"): cpt[int(workers[i].sex) - 1][3] += 1
+        if (dept == "GI"): cpt[int(workers[i].sex) - 1][4] += 1
+        if (dept == "JU"): cpt[int(workers[i].sex) - 1][5] += 1
+        if (dept == "OQ"): cpt[int(workers[i].sex) - 1][6] += 1
+
+    return cpt
+
+# calcul de la moyenne d'age selon la région où habite le salarié
+# il y a déjà un affichage intégré
+def ageSalaireSelonReg(workers):
+    cpt = {
+        "non": 0,
+        "01": 0,
+        "02": 0,
+        "03": 0,
+        "04": 0,
+        "11": 0,
+        "24": 0,
+        "27": 0,
+        "28": 0,
+        "32": 0,
+        "44": 0,
+        "52": 0,
+        "53": 0,
+        "75": 0,
+        "76": 0,
+        "84": 0,
+        "93": 0,
+        "94": 0
+    }
+
+    sum = {
+        "non": 0,
+        "01": 0,
+        "02": 0,
+        "03": 0,
+        "04": 0,
+        "11": 0,
+        "24": 0,
+        "27": 0,
+        "28": 0,
+        "32": 0,
+        "44": 0,
+        "52": 0,
+        "53": 0,
+        "75": 0,
+        "76": 0,
+        "84": 0,
+        "93": 0,
+        "94": 0
+    }
+
+    # sert pour l'affichage
+    regr = {
+        "non": "non-renseigné",
+        "01": "Guadeloupe",
+        "02": "Martinique",
+        "03": "Guyane",
+        "04": "La Réunion",
+        "11": "Île-de-France",
+        "24": "Centre-Val de Loire",
+        "27": "Bourgogne-Franche-Comté",
+        "28": "Normandie",
+        "32": "Nord-Pas-de-Calais-Picardie",
+        "44": "Alsace-Champagne-Ardenne-Lorraine",
+        "52": "Pays de la Loire",
+        "53": "Bretagne",
+        "75": "Aquitaine-Limousin-Poitou-Charentes",
+        "76": "Languedoc-Roussillon-Midi-Pyrénées",
+        "84": "Auvergne-Rhône-Alpes",
+        "93": "Provence-Alpes-Côte d'Azur",
+        "94": "Corse"
+    }
+
+    for i in range(len(workers)):
+        if (workers[i].regr == "" or workers[i].regr == "99"): 
+            if (workers[i].age != ""):
+                if(int(workers[i].age) > 16):
+                    cpt["non"] += 1
+                    sum["non"] += int(workers[i].age)
 
         else:
-            if (dept == ""): sumF[0] += 1
-            if (dept == "AZ"): sumF[1] += 1
-            if (dept == "BE"): sumF[2] += 1
-            if (dept == "FZ"): sumF[3] += 1
-            if (dept == "GI"): sumF[4] += 1
-            if (dept == "JU"): sumF[5] += 1
-            if (dept == "OQ"): sumF[6] += 1
+            if (workers[i].age != ""):
+                if(int(workers[i].age) > 16):
+                    cpt[workers[i].regr] += 1
+                    sum[workers[i].regr] += int(workers[i].age)
 
-    return sumH, sumF
+    for i in cpt:
+        sum[i] = round(sum[i] / cpt[i], 2)
+        print(regr[i], ":", sum[i])
 
-# Proportions des femmes par rapports aux hommes selon la nomenclature agrégée A6
-# les nomenclatures sont enregistrées dans cet ordre : non-renseigné, AZ, BE, FZ, GI, JU, OQ
-def proportionFemmeHomme(workers):
-    res = [0, 0, 0, 0, 0, 0, 0]
-    sum = salaireSelonDept(workers)
-    sumH = sum[0]
-    sumF = sum[1]
-
-    print(sumF)
-    print(sumH)
-    
-    for i in range (len(sumH)):
-        res[i] = sumF[i] / (sumH[i] + sumF[i])
-
-    return res
-
+    return sum
 
 salaryManWoman(workers)
