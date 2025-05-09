@@ -59,4 +59,49 @@ def salaryManWoman(workers):
     print(repM)
     print(repF)
 
+# la fonction à utiliser est proportionFemmeHomme, celle-là donne directement le nombre d'hommes et de femmes dans chaque departement
+def salaireSelonDept(workers):
+    sumH = [0, 0, 0, 0, 0, 0, 0]
+    sumF = [0, 0, 0, 0, 0, 0, 0]
+
+    for i in range (len(workers)):
+        dept = workers[i].nomenc
+
+        if (workers[i].sex == "1"):
+            if (dept == ""): sumH[0] += 1
+            if (dept == "AZ"): sumH[1] += 1
+            if (dept == "BE"): sumH[2] += 1
+            if (dept == "FZ"): sumH[3] += 1
+            if (dept == "GI"): sumH[4] += 1
+            if (dept == "JU"): sumH[5] += 1
+            if (dept == "OQ"): sumH[6] += 1
+
+        else:
+            if (dept == ""): sumF[0] += 1
+            if (dept == "AZ"): sumF[1] += 1
+            if (dept == "BE"): sumF[2] += 1
+            if (dept == "FZ"): sumF[3] += 1
+            if (dept == "GI"): sumF[4] += 1
+            if (dept == "JU"): sumF[5] += 1
+            if (dept == "OQ"): sumF[6] += 1
+
+    return sumH, sumF
+
+# Proportions des femmes par rapports aux hommes selon la nomenclature agrégée A6
+# les nomenclatures sont enregistrées dans cet ordre : non-renseigné, AZ, BE, FZ, GI, JU, OQ
+def proportionFemmeHomme(workers):
+    res = [0, 0, 0, 0, 0, 0, 0]
+    sum = salaireSelonDept(workers)
+    sumH = sum[0]
+    sumF = sum[1]
+
+    print(sumF)
+    print(sumH)
+    
+    for i in range (len(sumH)):
+        res[i] = sumF[i] / (sumH[i] + sumF[i])
+
+    return res
+
+
 salaryManWoman(workers)
