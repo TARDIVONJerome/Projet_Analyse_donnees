@@ -325,8 +325,8 @@ medSalaryOldYoung(repA,'Varmod_SALAAN_2016.csv')
 
 
 
-# calcule la médiane des salaires selon le département
-def medSalaireSelonDept(workers):
+# calcule les effectifs de toutes les catégories de salaire selon les secteurs d'industrie 
+def effectifSalaireSelonSecteur(workers):
     cpt = {
         "none": [],
         "AZ": [],
@@ -337,6 +337,7 @@ def medSalaireSelonDept(workers):
         "OQ": []
     }
 
+    # crée les éléments des tableaux
     for i in range(24):
         for j in cpt:
             cpt[j].append(0)
@@ -345,12 +346,16 @@ def medSalaireSelonDept(workers):
     for i in range (len(workers)):
         dept = workers[i].nomenc
 
-        if (workers[i].salary != ""):
+        if (workers[i].salary != ""):           # vérifie que le salary est renseigné
             nomenc = workers[i].nomenc
-            if (nomenc == ""): nomenc = "none"
+            if (nomenc == ""): nomenc = "none"  # si la nomenclature est vide, cela renvient à "none" (une clef ne peut pas être un string vide)
 
             cpt[nomenc][int(workers[i].salary)] += 1
+
+    # for i in cpt:
+    #     print(i, cpt[i])
     
+    # convertit cpt en un tableau pour la fonction medSalaryNomenclature
     res = []
 
     for i in cpt:
