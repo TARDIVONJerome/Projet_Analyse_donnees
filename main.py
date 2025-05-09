@@ -75,6 +75,11 @@ def salaryManWoman(workers): #calcule la répartition des hommes et de femmes da
     print(repM) #affichage
     print(repF)
 
+    repS=[]
+    repS.append(repM)
+    repS.append(repF)
+    return repS
+
 # calcul des effectifs d'homme et de femme dans chaque secteur d'industrie selon la nomenclature agrégée A6 
 def effectifSelonDept(workers):
     cpt = [[0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0]]
