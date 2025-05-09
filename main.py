@@ -50,7 +50,7 @@ workers2017 = []
 workers2018 = []
 workers2019 = []
 
-readFile("Salaries\\FD_SALAAN_2016.csv", workers2016)
+readFile("FD_SALAAN_2016.csv", workers2016)
 # readFile("Salaries\\FD_SALAAN_2017.csv", workers2017)
 # readFile("Salaries\\FD_SALAAN_2018.csv", workers2018)
 # readFile("Salaries\\FD_SALAAN_2019.csv", workers2019)
@@ -183,7 +183,7 @@ def ageSelonReg(workers):
 
     return sum
 
-salaryManWoman(workers)
+salaryManWoman(workers2016)
 
 
 def salaryOldYoung(workers): # calcul la répartition des ages dans les différentes tranches de salaire
@@ -208,7 +208,7 @@ def salaryOldYoung(workers): # calcul la répartition des ages dans les différe
 
     return repA
     
-repA=salaryOldYoung(workers)
+repA=salaryOldYoung(workers2016)
 
 def medSalaryOldYoung(repA,varmodfilename): # calcul les salaires médians pour chaque age (16 à 99) (besoins d'un fichier varmod pour connaitre les différentes tranches de slalaire grâce à la fonction getSalariesMinMax())
     ECC=[] # calcul de l'effectif cumulé croissant
@@ -323,46 +323,6 @@ medSalaryOldYoung(repA,'Varmod_SALAAN_2016.csv')
 
 
 
-def medSalaryOldYoung(repA,varmodfilename): # calcul les salaires médians pour chaque age (16 à 99) (besoins d'un fichier varmod pour connaitre les différentes tranches de slalaire grâce à la fonction getSalariesMinMax())
-    ECC=[] # calcul de l'effectif cumulé croissant
-    for i in range(0,16): 
-        ECC.append([])
-        for j in range(0,len(repA[i])):
-            ECC[i].append('#')
-
-    for i in range(16,len(repA)):
-        ECC.append([])
-        sum=0
-        for j in range (0,len(repA[i])):
-            sum+=repA[i][j]
-            ECC[i].append(sum)
-
-    for i in range (len(repA)): #affichage
-        print(ECC[i])
-
-    nummed=[] # calcul des position des médianes
-    for i in range(0,16):
-        nummed.append('#')
-    for i in range(16,len(ECC)):
-        nummed.append((ECC[i][len(ECC[i])-1]/2))
-
-    print(nummed) # affichage
-
-    med=[]
-    salaries=getSalariesMinMax(varmodfilename) # récupération des tranches de salaires via le fichier varmod
-
-    for i in range (0,16):
-        med.append('#')
-    for i in range (16,len(nummed)): #calcul des médianes
-        
-            
-        for j in range (0,len(ECC[i])):
-            if(nummed[i]-ECC[i][j]<=0): # vérification de la présence de la médiane dans la tranche actuelle
-                    
-                    
-                med.append(    salaries[j][0]+    (    (nummed[i]-ECC[i][j-1])    *    (salaries[j][2]-salaries[j][0])    )    /    (ECC[i][j]-ECC[i][j-1])    ) # formule de la médiane sur un caractère quantitatif continu
-                break
-    print(med)
 
 
 # calcule la médiane des salaires selon le département
