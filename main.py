@@ -78,8 +78,8 @@ def effectifSelonDept(workers):
     return cpt
 
 # calcul de la moyenne d'age selon la région où habite le salarié
-# il y a déjà un affichage intégré
-def ageSalaireSelonReg(workers):
+# il y a un affichage intégré (pas besoin d'afficher la valeur renvoyée)
+def ageSelonReg(workers):
     cpt = {
         "non": 0,
         "01": 0,
@@ -297,3 +297,42 @@ def getSalariesMinMax(varmodfilename):
 
 
 
+def medSalaireSelonDept(workers):
+    cptH = {
+        "none": [],
+        "AZ": [],
+        "BE": [],
+        "FZ": [],
+        "GI": [],
+        "JU": [],
+        "OQ": []
+    }
+
+    cptF = {
+        "none": [],
+        "AZ": [],
+        "BE": [],
+        "FZ": [],
+        "GI": [],
+        "JU": [],
+        "OQ": []
+    }
+
+    for i in range(24):
+        for j in cptH:
+            cptH[j].append(0)
+        for j in cptF:
+            cptF[j].append(0)
+        
+
+    for i in range (len(workers)):
+        dept = workers[i].nomenc
+
+        if (workers[i].salary != ""):
+            nomenc = workers[i].nomenc
+            if (nomenc == ""): nomenc = "none"
+
+            if (workers[i].sex == "1"): cptH[nomenc][int(workers[i].salary)] += 1
+            else: cptF[nomenc][int(workers[i].salary)] += 1
+
+    return cptH, cptF
