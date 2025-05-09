@@ -164,3 +164,136 @@ def ageSalaireSelonReg(workers):
     return sum
 
 salaryManWoman(workers)
+
+
+def salaryOldYoung(workers):
+    repA=[]
+
+
+    for i in range(0,16):
+        repA.append([])
+        for j in range (0,24):
+            repA[i].append('#')
+    for i in range (16,100):
+        repA.append([])
+        for j in range (0,24):
+            repA[i].append(0)
+    
+    for i in range (0,len(workers)):
+        if(workers[i].age!='' and int(workers[i].age)>15 and int(workers[i].age)<100): #on ne prend en compte que les salariés de 16 ans ou plus et on ignore également ceux ayant un age non renseigné à cause de données aberrantes (salariés en CDI de 0 ou 1 an)
+            repA[int(workers[i].age)][int(workers[i].salary)]+=1
+    
+    for i in range (len(repA)):
+        print(repA[i])
+
+    return repA
+
+
+
+
+def medSalaryOldYoung(repA,varmodfilename):
+    ECC=[]
+    for i in range(0,16):
+        ECC.append([])
+        for j in range(0,len(repA[i])):
+            ECC[i].append('#')
+
+    for i in range(16,len(repA)):
+        ECC.append([])
+        sum=0
+        for j in range (0,len(repA[i])):
+            sum+=repA[i][j]
+            ECC[i].append(sum)
+
+    for i in range (len(repA)):
+        print(ECC[i])
+
+    nummed=[]
+    for i in range(0,16):
+        nummed.append('#')
+    for i in range(16,len(ECC)):
+        nummed.append((ECC[i][len(ECC[i])-1]/2))
+
+    print(nummed)
+
+    med=[]
+    salaries=getSalariesMinMax(varmodfilename)
+
+    for i in range (0,16):
+        med.append('#')
+    for i in range (16,len(nummed)):
+        # if(nummed[i]%1==0):
+            
+            for j in range (0,len(ECC[i])):
+                if(nummed[i]-ECC[i][j]<=0):
+                    
+                    
+                    med.append(    salaries[j][0]+    (    (nummed[i]-ECC[i][j-1])    *    (salaries[j][2]-salaries[j][0])    )    /    (ECC[i][j]-ECC[i][j-1])    )
+                    break
+    print(med)
+
+
+
+
+
+def getSalariesMinMax(varmodfilename):
+    res=[]
+    f=open(varmodfilename)
+    lines=f.readlines()
+    cpt=0
+    for i in range (0,len(lines)):
+        tmp=lines[i].split(';')
+        if(tmp[0]=="TRNNETO"):
+            cpt+=1
+
+
+    for i in range (0,cpt):
+        res.append([None,None,None])
+
+    for i in range (0,len(lines)):
+        tmp=lines[i].split(';')
+        
+        if(tmp[0]=="TRNNETO"):
+            tmp[2]=int(tmp[2])
+            if("Moins" in tmp[3]):
+                res[tmp[2]][0]=0
+                tmpl=tmp[3].split(' ')
+                if(len(tmpl)==4):
+                    res[tmp[2]][2]=int(tmpl[2])
+                else:
+                    res[tmp[2]][2]=int(tmpl[2]+tmpl[3])
+                
+                res[tmp[2]][1]=(res[tmp[2]][0]+res[tmp[2]][2])/2
+
+            elif("et plus" in tmp[3]):
+                tmpl=tmp[3].split(' ')
+                if(len(tmpl)==4):
+                    res[tmp[2]][0]=int(tmpl[0])
+                else:
+                    res[tmp[2]][0]=int(tmpl[0]+tmpl[1])
+                
+
+            else :
+
+                tmpl=tmp[3].split(' ')
+
+                if(len(tmpl)==4):
+                    res[tmp[2]][2]=int(tmpl[2])
+                    res[tmp[2]][0]=int(tmpl[0])
+                elif(len(tmpl)==5):
+                    res[tmp[2]][2]=int(tmpl[2]+tmpl[3])
+                    res[tmp[2]][0]=int(tmpl[0])
+                elif(len(tmpl)==6):
+                    res[tmp[2]][2]=int(tmpl[3]+tmpl[4])
+                    res[tmp[2]][0]=int(tmpl[0]+tmpl[1])
+            
+                res[tmp[2]][1]=(res[tmp[2]][0]+res[tmp[2]][2])/2
+
+    
+    for i in range (0,len(res)):
+        print(res[i])
+    
+    return res
+
+
+
