@@ -363,17 +363,7 @@ def medSalaryOldYoung(repA,varmodfilename): # calcul les salaires médians pour 
 
 # calcule la médiane des salaires selon le département
 def medSalaireSelonDept(workers):
-    cptH = {
-        "none": [],
-        "AZ": [],
-        "BE": [],
-        "FZ": [],
-        "GI": [],
-        "JU": [],
-        "OQ": []
-    }
-
-    cptF = {
+    cpt = {
         "none": [],
         "AZ": [],
         "BE": [],
@@ -384,10 +374,8 @@ def medSalaireSelonDept(workers):
     }
 
     for i in range(24):
-        for j in cptH:
-            cptH[j].append(0)
-        for j in cptF:
-            cptF[j].append(0)
+        for j in cpt:
+            cpt[j].append(0)
         
 
     for i in range (len(workers)):
@@ -397,7 +385,11 @@ def medSalaireSelonDept(workers):
             nomenc = workers[i].nomenc
             if (nomenc == ""): nomenc = "none"
 
-            if (workers[i].sex == "1"): cptH[nomenc][int(workers[i].salary)] += 1
-            else: cptF[nomenc][int(workers[i].salary)] += 1
+            cpt[nomenc][int(workers[i].salary)] += 1
+    
+    res = []
 
-    return cptH, cptF
+    for i in cpt:
+        res.append(cpt[i])
+
+    return res
