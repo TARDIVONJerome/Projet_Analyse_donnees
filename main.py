@@ -10,17 +10,6 @@ class Person:
     def affiche(self):
         print(self.id, self.age, self.sex, self.salary,  self.nomenc, self.regr)
 
-workers2016 = []
-workers2017 = []
-workers2018 = []
-workers2019 = []
-
-
-
-readFile("Salaries\\FD_SALAAN_2016.csv", workers2016)
-# readFile("Salaries\\FD_SALAAN_2017.csv", workers2017)
-# readFile("Salaries\\FD_SALAAN_2018.csv", workers2018)
-# readFile("Salaries\\FD_SALAAN_2019.csv", workers2019)
         
 def readFile(fileName, workers):
     f = open(fileName)
@@ -56,6 +45,16 @@ def readFile(fileName, workers):
 
     print("Lecture de", fileName, "terminé \n")
     
+workers2016 = []
+workers2017 = []
+workers2018 = []
+workers2019 = []
+
+readFile("Salaries\\FD_SALAAN_2016.csv", workers2016)
+# readFile("Salaries\\FD_SALAAN_2017.csv", workers2017)
+# readFile("Salaries\\FD_SALAAN_2018.csv", workers2018)
+# readFile("Salaries\\FD_SALAAN_2019.csv", workers2019)
+
 
 def salaryManWoman(workers): #calcule la répartition des hommes et de femmes dans les différentes tranches de salaire
     repM=[]
