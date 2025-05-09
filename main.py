@@ -12,8 +12,9 @@ class Person:
 
 workers = []
         
-def readFile(fileName):
+def readFile(fileName, workers):
     f = open(fileName)
+    print(fileName, "en cours d'ouverture...")
     temp = f.readline().split(";")
 
     pos = {
@@ -21,19 +22,29 @@ def readFile(fileName):
         "sex": 0,
         "dept": 0,
         "salary": 0,
-        "nomenc": 0
+        "nomenc": 0,
+        "reg": 0
     }
 
+    # charge les positions de colonnes
     for i in range(len(temp)):
         if (temp[i] == "AGE"): pos["age"] = i
         if (temp[i] == "SEXE"): pos["sex"] = i
-        if (temp[i] == "DEPT"): pos["dept"] = i
         if (temp[i] == "TRNNETO"): pos["salary"] = i
         if (temp[i] == "A6"): pos["nomenc"] = i
+        if (temp[i] == "REGR"): pos["regr"] = i
 
-    for i in range (len(open(fileName).readlines()) - 1):
+    total = len(open(fileName).readlines()) - 1
+
+    # pourcentage de chargement
+    for i in range (total):
         s = f.readline().split(";")
-        workers.append(Person(i+2, s[pos["age"]], s[pos["sex"]], s[pos["dept"]], s[pos["salary"]], s[pos["nomenc"]]))
+        if (i % 30000 == 0): print(fileName + " lu à : " + str(round((i / total)*100, 2)) + "%")
+        workers.append(Person(i+2, s[pos["age"]], s[pos["sex"]], s[pos["salary"]], s[pos["nomenc"]], s[pos["regr"]]))
+
+    f.close()
+
+    print("Lecture de", fileName, "terminé \n")
 
 
 
@@ -145,9 +156,9 @@ def ageSelonReg(workers):
     }
 
     for i in range(len(workers)):
-        if (workers[i].regr == "" or workers[i].regr == "99"): 
-            if (workers[i].age != ""):
-                if(int(workers[i].age) > 16):
+        if (workers[i].regr == "" or workers[i].regr == "99"):  # vérifie que la région soit renseignée
+            if (workers[i].age != ""):                          # vérifie que l'age soit renseigné
+                if(int(workers[i].age) > 16):                   # vérifie que le salarié aie au moins 16 ans (données abhérentes en dessous)
                     cpt["non"] += 1
                     sum["non"] += int(workers[i].age)
 
@@ -296,7 +307,7 @@ def getSalariesMinMax(varmodfilename):
     return res
 
 
-
+# calcule la médiane des salaires selon le département
 def medSalaireSelonDept(workers):
     cptH = {
         "none": [],
