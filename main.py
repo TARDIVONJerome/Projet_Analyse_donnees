@@ -401,7 +401,7 @@ def medSalaireSelonDept(workers):
 
 
 
-    def medSalaryNomenclature(repA,varmodfilename): 
+def medSalaryNomenclature(repA,varmodfilename): #meme fonction que medSalaryOldYoung() mais modifiée légèrement pour calculer les médianes de n'importe quelle séries statistiques à deux caractères avec un caractère quantititive continue et un caractère qualitatif (on ne peut pas l'utiliser pour la médiane d'age à cause des 15 premières lignes qui doivent être à '#')
     ECC=[] 
     
 
@@ -438,7 +438,7 @@ def medSalaireSelonDept(workers):
     print(med)
 
 
-    def SalarySexDifference(workers,varmodfilename):
+def SalarySexDifference(workers,varmodfilename): #Calcule la différence du salaire moyen des hommes avec celui des femmes (dans une année)
     tmp=salaryManWoman(workers)
     repM=tmp[0]
     repF=tmp[1]
@@ -450,7 +450,7 @@ def medSalaireSelonDept(workers):
 
     moyM=0
     
-    for i in range (0,len(repM)-1):
+    for i in range (0,len(repM)-1): #calcul du salaire moyen des hommes
         moyM+=salaries[i][1]*repM[i]
         effectifM+=repM[i]
         
@@ -460,14 +460,14 @@ def medSalaireSelonDept(workers):
 
     moyF=0
     effectifF=0
-    for i in range (0,len(repF)-1):
+    for i in range (0,len(repF)-1): #calcul du salaire moyen des femmes
         moyF+=salaries[i][1]*repF[i]
         effectifF+=repF[i]
     moyF+=75000*repF[len(repF)-1]
     effectifF+=repF[len(repF)-1]
     moyF/=effectifF
 
-    diff=moyM-moyF
+    diff=moyM-moyF #calcul de la différence
 
     print(diff)
     return diff
