@@ -393,3 +393,45 @@ def medSalaireSelonDept(workers):
         res.append(cpt[i])
 
     return res
+
+
+    def SalarySexDifference(workers,varmodfilename):
+    tmp=salaryManWoman(workers)
+    repM=tmp[0]
+    repF=tmp[1]
+
+    salaries=getSalariesMinMax(varmodfilename)
+
+    effectifM=0
+    
+
+    moyM=0
+    
+    for i in range (0,len(repM)-1):
+        moyM+=salaries[i][1]*repM[i]
+        effectifM+=repM[i]
+        
+    moyM+=75000*repM[len(repM)-1]
+    effectifM+=repM[len(repM)-1]
+    moyM/=effectifM
+
+    moyF=0
+    effectifF=0
+    for i in range (0,len(repF)-1):
+        moyF+=salaries[i][1]*repF[i]
+        effectifF+=repF[i]
+    moyF+=75000*repF[len(repF)-1]
+    effectifF+=repF[len(repF)-1]
+    moyF/=effectifF
+
+    diff=moyM-moyF
+
+    print(diff)
+    return diff
+
+    
+    
+
+    
+
+SalarySexDifference(workers2016,"Varmod_SALAAN_2016.csv")
