@@ -1,14 +1,14 @@
 class Person:
-    def __init__(self, ida, age, sex, dept, salary, nomenclature):
+    def __init__(self, ida, age, sex, salary, nomenclature, regr):
         self.id = ida
         self.age = age
         self.sex = sex
-        self.dept = dept
         self.salary = salary
         self.nomenc = nomenclature
+        self.regr = regr
 
     def affiche(self):
-        print(self.id, self.age, self.sex, self.dept, self.salary,  self.nomenc)
+        print(self.id, self.age, self.sex, self.salary,  self.nomenc, self.regr)
 
 workers2016 = []
 workers2017 = []
